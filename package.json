@@ -1,5 +1,5 @@
 {
-  "name": "mern-bookstore-backend",
+  "name": "bookstore-backend",
   "version": "1.0.0",
   "description": "Backend Server",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/DevOpsMansa/MERN-bookStore-backEnd.git"
   },
-  "author": "Eric (Mansa)",
+  "author": "Eric",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DevOpsMansa/MERN-bookStore-backEnd/issues"
