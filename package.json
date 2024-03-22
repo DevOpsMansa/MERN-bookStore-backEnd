@@ -1,0 +1,26 @@
+{
+  "name": "mern-bookstore-backend",
+  "version": "1.0.0",
+  "description": "Backend Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevOpsMansa/MERN-bookStore-backEnd.git"
+  },
+  "author": "Eric (Mansa)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevOpsMansa/MERN-bookStore-backEnd/issues"
+  },
+  "homepage": "https://github.com/DevOpsMansa/MERN-bookStore-backEnd#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.1",
+    "mongodb": "^6.5.0",
+    "nodemon": "^3.1.0"
+  }
+}
