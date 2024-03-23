@@ -1,20 +1,24 @@
+// Load environment variables from .env file
+require("dotenv").config();
+
+//imports
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const port = process.env.PORT || 5000;
 
-// middlewear
-app.use(cors());
-app.use(express.json());
+// Middlewares
+app.use(cors()); // Cross-Origin Resource Sharing middleware
+app.use(express.json()); // Middleware to parse JSON requests
 
+// Root route
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// mongodb confiq here
+// MongoDB configuration
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const uri =
-  "mongodb+srv://bookStoreUser:mpBQ7OULS9nJQeuD@dbapp.xenzuty.mongodb.net/?retryWrites=true&w=majority&appName=dbApp";
+const uri = process.env.MONGO_URL; // Use environment variable
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -27,12 +31,12 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    // Connect the client to the server
     await client.connect();
-    // Send a ping to confirm a successful connection
+    // Send a ping to confirm a successful connection collection of books
     const bookCollections = client.db("BookInventory").collection("Books");
 
-    // insert a book to db: Post Method
+    // Insert a book into the database: POST method
     app.post("/upload-book", async (req, res) => {
       const data = req.body;
       // console.log(data);
@@ -47,7 +51,7 @@ async function run() {
     //     res.send(result)
     // })
 
-    // get all books & find by a category from db: get method
+    // Get all books or filter by category: GET method
     app.get("/all-books", async (req, res) => {
       let query = {};
       if (req.query?.category) {
@@ -69,8 +73,6 @@ async function run() {
         },
       };
       const options = { upsert: true };
-
-      // update now
       const result = await bookCollections.updateOne(
         filter,
         updatedDoc,
@@ -79,7 +81,7 @@ async function run() {
       res.send(result);
     });
 
-    // delete a item from db: Delete method
+    // Delete a book from the database: DELETE method
     app.delete("/book/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
@@ -87,7 +89,7 @@ async function run() {
       res.send(result);
     });
 
-    // get a single book data
+    // Get a single book's data from the database: GET method
     app.get("/book/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
@@ -95,6 +97,7 @@ async function run() {
       res.send(result);
     });
 
+    // Ping the deployment to confirm a successful connection to MongoDB
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
@@ -104,8 +107,10 @@ async function run() {
     // await client.close();
   }
 }
+// Call the run function and handle errors
 run().catch(console.dir);
 
+// Start the server
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
